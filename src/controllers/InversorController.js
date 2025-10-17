@@ -2,12 +2,12 @@ const path = require('path');
 // Importações de modelos/serviços
 const InversorService = require('../models/InversorService');
 const LogRepository = require('../models/LogRepository');
-// NOTA: Removido 'fs/promises' pois o HTML agora é gerado pelo Controller
 
+// NOTA: Removido 'fs/promises' pois o HTML agora é gerado pelo Controller
 class InversorController {
 
     // Recebe as dependências como argumentos (DI)
-    constructor(service, repository) {
+    constructor(service = new InversorService(), repository = new LogRepository()) {
         this.inversorService = service; 
         this.logRepository = repository;
 
