@@ -33,6 +33,19 @@ app.get('/log', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'views', 'log.html'));
 });
 
+// Rotas:
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'views', 'index.html'));
+});
+
+// Rota para mostrar o histórico (GET /log)
+app.get('/log', InversorController.renderLog); 
+
+// Rota para processar o formulário (POST /inverter)
+app.post('/inverter', InversorController.processarInversao); // <--- NOVO
+
+// Rota para mostrar o resultado final (GET /resultado)
+app.get('/resultado', InversorController.renderResultado); // <--- NOVO
 
 const server = app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);

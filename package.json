@@ -1,9 +1,14 @@
 {
-
-
+"jest": {
+    "testMatch": [
+        "**/__tests__/**/*.test.js", // Padrão
+        "**/__tests__/**/*.feature" // <--- Adiciona suporte a arquivos Gherkin
+    ]
+},
 "scripts": {
     "start": "node server.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage --forceExit" 
+    // --forceExit para Jest e Puppeteer trabalharem bem
 },
 
   "devDependencies": {
