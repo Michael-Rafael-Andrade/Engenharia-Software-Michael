@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Inversão</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            background-color: #e9f0f9; /* Fundo mais suave */
+        }
+        .container { 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+            width: 400px; 
+            max-width: 90%;
+            text-align: center; 
+        }
+        h1 { 
+            color: #1a73e8; /* Azul primário */
+            margin-bottom: 25px; 
+            font-size: 1.8em;
+        }
+        p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .resultado { 
+            font-size: 2.5em; 
+            font-weight: 700; 
+            color: #d93025; /* Cor de destaque para o resultado */
+            margin-top: 15px; 
+            padding: 10px;
+            border: 2px dashed #fcd2d2;
+            background-color: #fffafa;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+        a { 
+            color: #1a73e8; 
+            text-decoration: none; 
+            margin-top: 20px; 
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid #1a73e8;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        a:hover { 
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado da Inversão</h1>
+        <p>A string que você digitou, invertida, é:</p>
+        
+        <!-- ELEMENTO CRÍTICO: O teste de aceitação buscará este ID para verificar o resultado -->
+        <div class="resultado" id="texto-invertido">
+            <!-- O texto invertido será injetado aqui pelo InversorController -->
+            [N/A no HTML puro, o Controller o preencherá]
+        </div>
+
+        <a href="/">Nova Inversão</a>
+    </div>
+</body>
+</html>
+

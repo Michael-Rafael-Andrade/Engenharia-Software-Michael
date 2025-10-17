@@ -10,23 +10,19 @@ const app = express();
 const PORT = 3000;
 
 // 3. MIDDLEWARES (Configurações Globais)
-
-// Processa dados do formulário (POST body)
 app.use(express.urlencoded({ extended: true }));
 
-// Configura para servir arquivos estáticos (HTML puro na pasta 'views')
-// IMPORTANTE: Isso permite que você acesse index.html e log.html diretamente se eles fossem a única coisa no servidor.
-// No nosso caso, usaremos rotas explícitas, mas o middleware é bom para outros arquivos (CSS, imagens).
-// app.use(express.static(path.join(__dirname, 'src', 'views'))); 
-// Comentamos essa linha pois estamos usando res.sendFile/Controller para ter controle total.
+// ** Middleware para servir arquivos estáticos/views **
+// Configura o Express para buscar arquivos estáticos (index.html, CSS, JS)
+// no diretório 'src/views'. Isso garante que 'index.html' seja servido
+// automaticamente quando a rota raiz ('/') for acessada.
+app.use(express.static(path.join(__dirname, 'src', 'views')));
 
 
 // 4. DEFINIÇÃO DE ROTAS (Mapeamento do Controller)
 
-// Rota GET / (Página Inicial: Serve index.html)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'views', 'index.html'));
-});
+// A rota GET / é agora implicitamente tratada por express.static,
+// então a removemos para evitar conflitos ou código redundante.
 
 // Rota para processar o formulário (POST /inverter)
 app.post('/inverter', InversorController.processarInversao); 
@@ -38,10 +34,12 @@ app.get('/resultado', InversorController.renderResultado);
 app.get('/log', InversorController.renderLog); 
 
 
-// 5. INICIA O SERVIDOR
-const server = app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// 5. EXPORTA O APP PRIMEIRO (Para uso nos testes)
+module.exports = app; 
 
-// 6. EXPORTA O APP (Para uso nos testes com Supertest)
-module.exports = app;
+// 6. INICIA O SERVIDOR CONDICIONALMENTE (Usa a porta 3000)
+if (require.main === module) {
+    const server = app.listen(PORT, () => {
+        console.log(`Servidor rodando em http://localhost:${PORT}`);
+    });
+}
