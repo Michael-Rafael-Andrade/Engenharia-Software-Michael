@@ -1,7 +1,16 @@
 const express = require('express');
+// ... (imports)
 const path = require('path');
-// Importaremos o Controller aqui quando ele estiver pronto
+const InversorController = require('./src/controllers/InversorController'); // <--- NOVO
 
+const app = express();
+// ... (configurações)
+
+// Rota GET /log (AGORA USANDO O CONTROLLER)
+app.get('/log', InversorController.renderLog); // <--- ATUALIZADO
+app.get('/', (req, res) => { /* ... */ });
+
+// ... (Inicia o servidor e exporta o app)
 const app = express();
 const PORT = 3000;
 
