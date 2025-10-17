@@ -9,16 +9,22 @@ let page;
 let server;
 let url;
 
-defineFeature(feature, test => {
-    
+defineFeature(feature, test => {   
     // Configuração e Limpeza
-    beforeAll(() => {
-        server = app.listen(3001); // Rodamos em porta diferente para o teste
+    beforeAll((done) => { // ADICIONE 'done'
+        // Inicia o servidor, usando done para sinalizar que a operação assíncrona terminou
+        server = app.listen(3001, () => {
+            console.log('Test server started on port 3001');
+            done(); // Sinaliza ao Jest que a configuração está completa
+        }); 
         url = 'http://localhost:3001';
     });
 
     afterAll(async () => {
-        await server.close();
+        // Garante que o servidor seja fechado após todos os testes de aceitação
+        if (server) {
+            await new Promise(resolve => server.close(resolve)); // Fecha o servidor de forma assíncrona
+        }
     });
 
     beforeEach(async () => {

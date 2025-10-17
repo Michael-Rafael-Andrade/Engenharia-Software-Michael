@@ -23,7 +23,7 @@ class InversorController {
         logHtml += '</ul>';
 
         // Lê o arquivo HTML da View
-        const logFilePath = path.join(__dirname, '..', 'views', 'log.html');
+        const logFilePath = path.resolve(__dirname, '..', 'views', 'log.html');
         fs.readFile(logFilePath, 'utf8', (err, data) => {
             if (err) {
                 console.error("Erro ao ler log.html:", err);
