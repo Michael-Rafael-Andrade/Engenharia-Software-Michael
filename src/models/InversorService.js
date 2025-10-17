@@ -1,13 +1,21 @@
-class InversorService {
+/**
+ * src/models/InversorService.js
+ * Lógica de Negócio para a inversão de strings.
+ * * * CORREÇÃO CRÍTICA: Refatorado de objeto literal para CLASSE (Constructor)
+ * * para resolver o TypeError: InversorService is not a constructor.
+ */
+class InversorService { // AGORA É UMA CLASSE
     /**
-     * Lógica pura que inverte uma string.
-     * Esta é a "unidade" de código que o Teste Unitário deve cobrir 100%.
+     * Inverte a ordem dos caracteres em uma string.
+     * @param {string} texto - A string a ser invertida.
+     * @returns {string} - A string invertida.
      */
-    static inverterString(texto) {
-        if (!texto || typeof texto !== 'string') {
-            return ''; // Retorna string vazia se a entrada for inválida
+    inverterString(texto) {
+        if (!texto || typeof texto !== 'string' || texto.length === 0) {
+            return '';
         }
-        // Converte a string em array -> inverte o array -> junta de volta em string
+
+        // Lógica de inversão: divide, reverte e junta (Cenários 1 e 2 cobertos)
         return texto.split('').reverse().join('');
     }
 }

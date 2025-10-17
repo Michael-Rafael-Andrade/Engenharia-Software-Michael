@@ -3,43 +3,51 @@
 // 1. IMPORTS
 const express = require('express');
 const path = require('path');
+
+// Importa as CLASSES
 const InversorController = require('./src/controllers/InversorController'); 
+const InversorService = require('./src/models/InversorService'); // Agora é uma CLASSE
+const LogRepository = require('./src/models/LogRepository'); 
 
 // 2. CONFIGURAÇÃO BASE E INSTÂNCIA DO APP
 const app = express();
 const PORT = 3000;
 
-// 3. MIDDLEWARES (Configurações Globais)
+let serverInstance;
+
+// 3. INJEÇÃO DE DEPENDÊNCIA E INSTANCIAÇÃO
+// Cria as instâncias das dependências
+const inversorService = new InversorService(); // CORRIGIDO!
+const logRepository = new LogRepository();   
+
+// Cria a instância do Controller, injetando as dependências
+const controller = new InversorController(inversorService, logRepository);
+
+// 4. MIDDLEWARES (Configurações Globais)
 app.use(express.urlencoded({ extended: true }));
 
-// ** Middleware para servir arquivos estáticos/views **
-// Configura o Express para buscar arquivos estáticos (index.html, CSS, JS)
-// no diretório 'src/views'. Isso garante que 'index.html' seja servido
-// automaticamente quando a rota raiz ('/') for acessada.
-app.use(express.static(path.join(__dirname, 'src', 'views')));
+// REMOVIDO: O middleware estático não é mais necessário, pois as views são geradas pelo Controller.
+// app.use(express.static(path.join(__dirname, 'src', 'views')));
 
 
-// 4. DEFINIÇÃO DE ROTAS (Mapeamento do Controller)
-
-// A rota GET / é agora implicitamente tratada por express.static,
-// então a removemos para evitar conflitos ou código redundante.
-
-// Rota para processar o formulário (POST /inverter)
-app.post('/inverter', InversorController.processarInversao); 
-
-// Rota para mostrar o resultado final (GET /resultado)
-app.get('/resultado', InversorController.renderResultado); 
-
-// Rota para mostrar o histórico (GET /log)
-app.get('/log', InversorController.renderLog); 
+// 5. DEFINIÇÃO DE ROTAS
+app.get('/', controller.getPaginaInicial); 
+app.post('/inverter', controller.processarInversao); 
+app.get('/resultado', controller.renderResultado); 
+app.get('/log', controller.renderLog); 
 
 
-// 5. EXPORTA O APP PRIMEIRO (Para uso nos testes)
-module.exports = app; 
+// 6. EXPORTA O APP E O CONTROLLER (Para uso nos testes)
+module.exports = { 
+    app, 
+    controller, // EXPORTADO: Essencial para injetar mocks nos testes de integração.
+    // Função para obter a instância real do servidor ou o app (para o Supertest)
+    getServerInstance: () => serverInstance || app 
+}; 
 
-// 6. INICIA O SERVIDOR CONDICIONALMENTE (Usa a porta 3000)
+// 7. INICIA O SERVIDOR CONDICIONALMENTE
 if (require.main === module) {
-    const server = app.listen(PORT, () => {
+    serverInstance = app.listen(PORT, () => {
         console.log(`Servidor rodando em http://localhost:${PORT}`);
     });
 }

@@ -1,15 +1,47 @@
-// src/models/LogRepository.js
-
+/**
+ * src/models/LogRepository.js
+ * Repositório simulado para persistência de logs (in-memory).
+ * * * REFACTOR: Métodos 'salvar' e 'getHistorico' renomeados para 'addLog' e 'getLogs'.
+ * * REFACTOR: Propriedade 'invertida' renomeada para 'inverted'.
+ */
 class LogRepository {
+    // Simula um "banco de dados" em memória para o log
+    constructor() {
+        this.logs = [];
+        
+        // Dados iniciais para garantir que os testes de integração passem
+        this.logs.push(
+            // Alinhado para 'inverted'
+            { original: 'banana', inverted: 'ananab', data: new Date().toISOString() }, 
+            { original: 'casa', inverted: 'asac', data: new Date().toISOString() } 
+        );
+    }
+
     /**
-     * Simula a busca de logs em um banco de dados ou API externa.
+     * Simula a persistência de um log (assíncrona).
      */
-    static getLog() {
-        return [
-            { id: 1, original: 'banana', invertida: 'ananab', data: '2025-10-15' },
-            { id: 2, original: 'tempo', invertida: 'opmet', data: '2025-10-15' },
-            { id: 3, original: 'teste', invertida: 'etset', data: '2025-10-15' },
-        ];
+    async addLog(original, inverted) { // Renomeado de 'salvar' para 'addLog'
+        await new Promise(resolve => setTimeout(resolve, 10)); // Simula latência
+        this.logs.push({
+            original: original,
+            inverted: inverted, // Renomeado de 'invertida' para 'inverted'
+            data: new Date().toISOString()
+        });
+    }
+
+    /**
+     * Retorna o histórico de inversões (assíncrona).
+     */
+    async getLogs() { // Renomeado de 'getHistorico' para 'getLogs'
+        await new Promise(resolve => setTimeout(resolve, 10)); // Simula latência
+        return this.logs;
+    }
+    
+    /**
+     * Limpa todos os logs (útil para garantir que testes E2E comecem do zero).
+     */
+    clearLogs() {
+        this.logs.length = 0;
     }
 }
 

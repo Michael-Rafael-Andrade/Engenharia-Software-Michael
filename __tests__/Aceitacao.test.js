@@ -1,7 +1,7 @@
 const { loadFeature, defineFeature } = require('jest-cucumber');
 const puppeteer = require('puppeteer');
-// Importa o servidor
-const app = require('../server');
+// Importa o app e o controller
+const { app, controller } = require('../server');
 const path = require('path');
 
 // Caminho absoluto para o Aceitacao.feature
@@ -10,6 +10,9 @@ const feature = loadFeature(path.resolve(__dirname, 'Aceitacao.feature'));
 let browser;
 let page;
 let server;
+
+// CRÍTICO: Limpa o log real antes de rodar os testes E2E.
+controller.logRepository.clearLogs(); 
 
 defineFeature(feature, (test) => {
     
@@ -29,9 +32,9 @@ defineFeature(feature, (test) => {
     afterAll(async () => {
         await browser.close();
         if (server) {
-            server.close(() => {
-                console.log('Test server closed');
-            });
+            // Garantimos que o servidor feche de forma assíncrona
+            await new Promise(resolve => server.close(resolve));
+            console.log('Test server closed');
         }
     });
 
@@ -41,28 +44,25 @@ defineFeature(feature, (test) => {
         // PASSO 1/5: Given O servidor esta rodando em "http://localhost:3001"
         given(/^O servidor esta rodando em "(.*)"$/, async (url) => {
             // Navega para a URL correta e verifica se a página carregou.
-            await page.goto('http://localhost:3001'); 
+            await page.goto(url); 
             await expect(page.title()).resolves.toMatch('Inversor');
         });
 
         // PASSO 2/5: When O usuario digita "caminho" no campo de texto
         when(/^O usuario digita "(.*)" no campo de texto$/, async (texto) => {
-            // CORRIGIDO: Usa o ID #texto-original (do index.html)
             await page.type('#texto-original', texto); 
         });
 
         // PASSO 3/5: And Clica no botao "Inverter"
         and(/^Clica no botao "(.*)"$/, async (botao) => {
-            // Clica no botão de submit e aguarda o carregamento da próxima página
-            await page.click('button[type="submit"]'); 
+            // Usa o ID do botão para maior robustez
+            await page.click('#botao-inverter'); 
+            // Aguarda o redirecionamento (do POST para o GET /resultado?...)
             await page.waitForNavigation();
         });
 
         // PASSO 4/5: Then Deve ser redirecionado para a pagina de resultado
         then('Deve ser redirecionado para a pagina de resultado', async () => {
-            // Este passo garante que a navegação para o resultado.html foi bem-sucedida.
-            // A verificação real do conteúdo está no próximo passo.
-            // Para ser robusto, verificamos que o título da página mudou (ex: para Resultado)
             await expect(page.title()).resolves.toMatch('Resultado');
         });
 
