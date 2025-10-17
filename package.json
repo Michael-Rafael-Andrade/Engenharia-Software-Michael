@@ -1,20 +1,32 @@
 {
-"jest": {
-    "testMatch": [
-        "**/__tests__/**/*.test.js", // Padrão
-        "**/__tests__/**/*.feature" // <--- Adiciona suporte a arquivos Gherkin
-    ]
-},
-"scripts": {
+  "name": "inversor-simples",
+  "version": "1.0.0",
+  "description": "Projeto de Inversor de Strings com testes de aceitação e integração.",
+  "main": "server.js",
+  "scripts": {
     "start": "node server.js",
-    "test": "jest --coverage --forceExit" 
-    // --forceExit para Jest e Puppeteer trabalharem bem
-},
-
+    "test": "jest --coverage --forceExit"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "jest"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"  
+  },
   "devDependencies": {
     "jest": "^30.2.0",
     "jest-cucumber": "^4.5.0",
     "puppeteer": "^24.25.0",
     "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.test.js",
+      "**/__tests__/**/*.feature"
+    ]
   }
 }
