@@ -148,4 +148,19 @@ describe('Teste de Integracao: Controller e LogRepository', () => {
         });
     });
 
+
+    // Tratando - mock / silenciar o console.error
+    let errorSpy;
+
+    beforeAll(() => {
+        // Espiona o console.error e o substitui por uma função vazia.
+        // Isso evita que os erros simulados nos blocos catch poluam a saída.
+        errorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+    });
+
+    afterAll(() => {
+        // Restaura a função original do console.error após todos os testes.
+        errorSpy.mockRestore();
+    });
+
 });
