@@ -46,6 +46,7 @@ module.exports = {
 }; 
 
 // 7. INICIA O SERVIDOR CONDICIONALMENTE
+/* istanbul ignore next */ //
 if (require.main === module) {
     serverInstance = app.listen(PORT, () => {
         console.log(`Servidor rodando em http://localhost:${PORT}`);
