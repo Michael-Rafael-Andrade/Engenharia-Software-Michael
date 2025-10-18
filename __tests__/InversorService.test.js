@@ -19,5 +19,6 @@ describe('Teste Unitário: InversorService', () => {
     test('3. Deve retornar string vazia para entradas nulas ou inválidas', () => {
         expect(service.inverterString(null)).toBe('');
         expect(service.inverterString(undefined)).toBe('');
+        // Observação: 2 casos distintos porém analisados neste cenário
     });
 });

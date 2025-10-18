@@ -107,7 +107,7 @@ describe('Teste de Integracao: Controller e LogRepository', () => {
             expect(response.headers.location).toBe('/'); // Verifica se redirecionou para a raiz
         });
 
-        // NOVO TESTE: COBERTURA DO CATCH NO RENDER LOG (InversorController Linhas 160-161)
+        // NOVO TESTE: COBERTURA DO CATCH NO RENDER LOG (InversorController Linhas 160-161) <- REFERENTE A ERROS QUE FORAM REPARADOS AO LONGO DA CRIAÇÃO DO CÓDIGO
         test('5. GET /log deve retornar status 500 se o LogRepository falhar', async () => {
             // 1. Mocka o Repository para SEMPRE lançar um erro
             const mockRepoFalho = {
@@ -143,7 +143,7 @@ describe('Teste de Integracao: Controller e LogRepository', () => {
             // Simplesmente chamar a função é suficiente para cobrir a linha
             const instance = getServerInstance();
 
-            // A instância deve ser o app, já que o servidor de teste não foi ligado no contexto principal
+            // A instância deve ser o app
             expect(instance).toBe(app);
         });
     });

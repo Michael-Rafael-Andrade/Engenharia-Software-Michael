@@ -52,6 +52,7 @@ defineFeature(feature, (test) => {
         // PASSO 2/5: When O usuario digita "caminho" no campo de texto
         when(/^O usuario digita "(.*)" no campo de texto$/, async (texto) => {
             await page.type('#texto-original', texto);
+            // Espera-se no teste que o usuário digite = "caminho"
         });
 
         // PASSO 3/5: And Clica no botao "Inverter"

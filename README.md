@@ -37,3 +37,8 @@ Para rodar o projeto localmente, siga os seguintes passos no seu terminal:
 | **Iniciar o Servidor** | `npm start` | O servidor iniciará em `http://localhost:3000`. |
 | **Executar os Testes** | `npm test` | Executa todos os testes (Unitário, Integração, E2E) e gera o relatório de cobertura. |
 | **Visualizar Cobertura** | (Após o `npm test`) | O relatório HTML detalhado estará na pasta `/coverage`. |
+
+## INFORMAÇÕES EXTRA
+**PÓS GRAUAÇÃO - FULL STACK - IF SUDESTE MG - POLO MANHUAÇU**
+**PROFESSOR: DR. PHD - FILIPE FERNANDES**
+## https://sig.ifsudestemg.edu.br/sigaa/public/curso/portal.jsf?id=27247411&lc=pt_BR&nivel=L ##
